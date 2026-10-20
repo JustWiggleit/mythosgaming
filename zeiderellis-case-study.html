@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Case Study: Zeiderelli&rsquo;s Pizza &amp; Subs | Mythos Systems</title>
+<meta name="description" content="Case study: a live website, DIY point-of-sale, owner control panel, and kiosk terminal built for Zeiderelli's Pizza & Subs in Duncannon, PA.">
+<link rel="stylesheet" href="gothic.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="wordmark" href="index.html">Jay <span>the Intern</span><small>MYTHOS Corporation</small></a>
+    <nav class="main-nav" aria-label="Site">
+      <a href="index.html">Home</a>
+      <a href="our-work.html">Our Work</a>
+      <a href="my-work.html">My Work</a>
+      <a href="the-archive.html">The Archive</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-hero">
+  <div class="wrap">
+    <p class="section-label">Case Study · Mythos Systems</p>
+    <h1>Zeiderelli&rsquo;s Pizza &amp; Subs</h1>
+    <p>A working pizza shop at 16 S Market St, Duncannon, PA got the full stack — website, point-of-sale, control panel, and terminal hardware — built by one person working the counter.</p>
+  </div>
+</div>
+
+<section class="block">
+  <div class="wrap">
+    <p class="section-label">The Situation</p>
+    <h2>A good shop, expensive pipes</h2>
+    <p class="lede">The shop&rsquo;s food was fine. Its pipes were not: online orders flowed through third parties charging 25–30% over menu price, the point-of-sale was a vendor stack with its own fees, and the shop had no website of its own. Every order paid rent to somebody else.</p>
+    <div class="feature">
+      <div>
+        <p class="kicker">Delivered · Website</p>
+        <h3>zeiderellis.dpdns.org</h3>
+        <p>Full menu site with a weekly lunch-special rhythm, Facebook and Maps integration, mailing-list capture into Google Sheets, and Restaurant structured data that passed Google&rsquo;s Rich Results test with zero errors.</p>
+        <p><a class="more" href="https://zeiderellis.dpdns.org/" target="_blank" rel="noopener">Visit the live site &rarr;</a></p>
+      </div>
+      <div>
+        <p class="kicker">Delivered · Point of Sale</p>
+        <h3>Fees designed out</h3>
+        <p>A DIY POS in Python, Flask, and SQLite: tap-to-add ordering from the real menu, order queue, history, and daily totals. Cash completes at $0 fee. Cards run through Stripe-hosted checkout — the card never touches the shop&rsquo;s server.</p>
+      </div>
+    </div>
+    <div class="feature">
+      <div>
+        <p class="kicker">Delivered · Control Panel</p>
+        <h3>The owner&rsquo;s hands on the wheel</h3>
+        <p>Menu and prices editable in the panel — which became the source of truth the printed menu is reprinted from. Weekly specials, availability toggles, employee clock in/out with CSV export, a capped card-fee surcharge toggle, and a printer registry with test prints.</p>
+      </div>
+      <div>
+        <p class="kicker">Delivered · Hardware</p>
+        <h3>A 2015 all-in-one, reborn</h3>
+        <p>The shop&rsquo;s Acer Aspire all-in-one became the POS terminal: Debian 13 minimal, a browser kiosk that boots straight to the register, and a print relay driving the shop&rsquo;s existing Epson receipt printers and cash drawer. Original Windows drive untouched.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block alt">
+  <div class="wrap">
+    <p class="section-label">Verification</p>
+    <h2>496 checks, all passing</h2>
+    <p class="lede">The system ships with an automated test suite covering the POS, the print queue, the hosting layer, and the control panel — plus live verification of every redirect, the structured data, and the mobile layout. Honest limits, stated in the owner&rsquo;s own overview document: live Stripe keys, the real printer hardware test, and go-live remain the shop&rsquo;s moves.</p>
+    <div class="stat-row">
+      <div class="stat"><span class="num">496</span><span class="lbl">Automated Checks</span></div>
+      <div class="stat"><span class="num">146</span><span class="lbl">Menu Items</span></div>
+      <div class="stat"><span class="num">$0</span><span class="lbl">Middleman Fees</span></div>
+      <div class="stat"><span class="num">1</span><span class="lbl">Builder</span></div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer" id="contact">
+  <div class="wrap">
+    <div class="footer-inner">
+      <div>
+        <h4>Jay the Intern</h4>
+        <p>Founder of MYTHOS Corporation. Builder of games, systems, and the teams that ship them.</p>
+      </div>
+      <div>
+        <h4>Divisions</h4>
+        <a href="troll-squad-productions.html">Troll Squad Productions</a>
+        <a href="mythos-interactive.html">Mythos Interactive</a>
+        <a href="mythos-manufacturing.html">Mythos Manufacturing</a>
+        <a href="mythos-systems.html">Mythos Systems</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="mailto:trollsquadproductions@gmail.com">trollsquadproductions@gmail.com</a>
+        <a href="https://g.page/r/Cdmuf9Ouadc4EBI/review" target="_blank" rel="noopener">Leave a Google review</a>
+        <a href="https://www.facebook.com/1398358836689801" target="_blank" rel="noopener">Hostile Takeover on Facebook</a>
+      </div>
+    </div>
+    <div class="footer-base">
+      <span>&copy; 2026 MYTHOS Corporation</span>
+      <span>Built with AI. Verified by a human.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Gate — Three Riddles | MYTHOS Corporation</title>
+<meta name="description" content="Three riddles guard the finished Lost Connection. Their answers live in the lore of this site.">
+<link rel="stylesheet" href="gothic.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  .riddle{border:1px solid var(--line);border-radius:var(--radius);background:var(--card);padding:26px;margin-bottom:18px}
+  .riddle h3{font-size:1.05rem;margin-bottom:10px;color:var(--accent-deep)}
+  .riddle p{font-size:1.08rem;color:var(--ink);margin-bottom:16px;font-style:italic}
+  .riddle input{width:100%;padding:12px 14px;border-radius:8px;border:1px solid var(--line);background:#100d0a;color:var(--ink);font-size:1rem;font-family:"Source Sans 3",sans-serif}
+  .riddle input:focus{outline:2px solid var(--accent);border-color:var(--accent)}
+  .riddle .state{margin-top:10px;font-size:.92rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+  .riddle.solved{border-color:var(--accent)}
+  .riddle.solved .state{color:var(--accent-deep)}
+  .riddle .state{color:var(--muted)}
+  #gate-msg{margin:18px 0;font-weight:600;color:var(--muted)}
+  #unlock{display:none;margin-top:10px}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="wordmark" href="index.html">Jay <span>the Intern</span><small>MYTHOS Corporation</small></a>
+    <nav class="main-nav" aria-label="Site">
+      <a href="index.html">Home</a>
+      <a href="our-work.html">Our Work</a>
+      <a href="my-work.html">My Work</a>
+      <a href="the-archive.html">The Archive</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Layer Three · The Gate</p>
+    <h1>Three riddles stand <em>between you and the signal</em>.</h1>
+    <p class="roles">Behind this gate sits the finished Lost Connection — the raw exhibit from the Archive, rebuilt whole. Beyond it, doors that only open for employees. The riddles are fair: every answer lives somewhere on this site.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap" style="max-width:760px">
+    <div class="riddle" id="r1">
+      <h3>The First Seal</h3>
+      <p>&ldquo;I begin at forty, I am shared by rivals, and when I reach zero the house collects everything. What am I?&rdquo;</p>
+      <input type="text" id="a1" placeholder="Your answer" autocomplete="off">
+      <p class="state" id="s1">Sealed</p>
+    </div>
+    <div class="riddle" id="r2">
+      <h3>The Second Seal</h3>
+      <p>&ldquo;Three of me, performed on hallowed ground with a burned-out offering, and the whole company changes hands. What am I?&rdquo;</p>
+      <input type="text" id="a2" placeholder="Your answer" autocomplete="off">
+      <p class="state" id="s2">Sealed</p>
+    </div>
+    <div class="riddle" id="r3">
+      <h3>The Third Seal</h3>
+      <p>&ldquo;I watch every game. I break every player. I have never once drawn a card. Who am I?&rdquo;</p>
+      <input type="text" id="a3" placeholder="Your answer" autocomplete="off">
+      <p class="state" id="s3">Sealed</p>
+    </div>
+    <button class="btn btn-solid" id="try-btn" type="button">Test the seals</button>
+    <p id="gate-msg">The gate is patient. It has waited this long.</p>
+    <div id="unlock">
+      <p class="statement">All three seals broken. The signal is yours to restore.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-solid" href="lost-connection.html">Enter Lost Connection</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer" id="contact">
+  <div class="wrap">
+    <div class="footer-inner">
+      <div>
+        <h4>Jay the Intern</h4>
+        <p>Founder of MYTHOS Corporation. Builder of games, systems, and the teams that ship them.</p>
+      </div>
+      <div>
+        <h4>Divisions</h4>
+        <a href="troll-squad-productions.html">Troll Squad Productions</a>
+        <a href="mythos-interactive.html">Mythos Interactive</a>
+        <a href="mythos-manufacturing.html">Mythos Manufacturing</a>
+        <a href="mythos-systems.html">Mythos Systems</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="mailto:trollsquadproductions@gmail.com">trollsquadproductions@gmail.com</a>
+        <a href="https://g.page/r/Cdmuf9Ouadc4EBI/review" target="_blank" rel="noopener">Leave a Google review</a>
+        <a href="https://www.facebook.com/1398358836689801" target="_blank" rel="noopener">Hostile Takeover on Facebook</a>
+      </div>
+    </div>
+    <div class="footer-base">
+      <span>&copy; 2026 MYTHOS Corporation</span>
+      <span>Built with AI. Verified by a human.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="access.js"></script>
+<script>
+(function(){
+  var answers = [
+    {input:'a1', box:'r1', state:'s1', ok:['sanity','the sanity pool','sanity pool']},
+    {input:'a2', box:'r2', state:'s2', ok:['ritual','a ritual','rituals','the ritual']},
+    {input:'a3', box:'r3', state:'s3', ok:['the board','board']}
+  ];
+  function norm(s){ return (s||'').trim().toLowerCase().replace(/\s+/g,' '); }
+  document.getElementById('try-btn').addEventListener('click', function(){
+    var solved = 0;
+    answers.forEach(function(r){
+      var v = norm(document.getElementById(r.input).value);
+      var good = r.ok.indexOf(v) !== -1;
+      document.getElementById(r.box).classList.toggle('solved', good);
+      document.getElementById(r.state).textContent = good ? 'Broken' : 'Sealed';
+      if (good) solved++;
+    });
+    var msg = document.getElementById('gate-msg');
+    if (solved === 3) {
+      if (window.markStep) window.markStep('gate');
+      msg.textContent = '';
+      document.getElementById('unlock').style.display = 'block';
+      document.getElementById('unlock').scrollIntoView({behavior:'smooth', block:'center'});
+    } else if (solved === 0) {
+      msg.textContent = 'The gate does not move. The answers are on this site — the game\'s page keeps them.';
+    } else {
+      msg.textContent = solved + ' of 3 seals broken. The gate stirs, but holds.';
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

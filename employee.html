@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>INTERNAL — MYTHOS Corporation Employee Site</title>
+<meta name="description" content="MYTHOS Corporation internal employee site. Access granted by restored signal.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="gothic.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  #access-gate{display:none}
+  .access-steps{list-style:none;margin:22px 0;padding:0}
+  .access-steps li{border:1px solid var(--line);border-radius:var(--radius);background:var(--card);padding:16px 20px;margin-bottom:12px;color:var(--muted)}
+  .access-steps li strong{color:var(--ink)}
+  .access-steps li.done{border-color:var(--accent);color:var(--ink)}
+  .access-steps li.done .step-state{color:var(--accent-deep)}
+  .step-state{float:right;font-size:.8rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+  .signin-form{border:1px solid var(--line);border-radius:var(--radius);background:var(--card);padding:26px;max-width:520px}
+  .signin-form label{display:block;font-size:.82rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:14px 0 6px}
+  .signin-form label:first-of-type{margin-top:0}
+  .signin-form input{width:100%;padding:12px 14px;border-radius:8px;border:1px solid var(--line);background:#100d0a;color:var(--ink);font-size:1rem;font-family:"Source Sans 3",sans-serif}
+  .signin-form input:disabled{opacity:.45}
+  .signin-form button{margin-top:18px;opacity:.45;cursor:not-allowed}
+  .signin-note{margin-top:14px;color:var(--muted);font-size:.94rem}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="wordmark" href="index.html">MYTHOS <span>INTERNAL</span><small>Employee Access Only</small></a>
+    <nav class="main-nav" aria-label="Site">
+      <a href="index.html">Public Site</a>
+      <a href="the-gate.html">The Gate</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Access sequence screen — shown until the multi-step sign-in is complete -->
+<div id="access-gate">
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">MYTHOS Corporation · Employee Access</p>
+      <h1>Access sequence <em>incomplete</em>.</h1>
+      <p class="roles">Employee entry is a three-step sign-in. Your progress this session:</p>
+      <ul class="access-steps">
+        <li id="step-gate"><strong>Step 1 — The Gate.</strong> Break the three seals. <span class="step-state">Required</span></li>
+        <li id="step-signal"><strong>Step 2 — The Signal.</strong> Restore the connection in Lost Connection. <span class="step-state">Required</span></li>
+        <li id="step-credentials"><strong>Step 3 — Credentials.</strong> Employee sign-in. Activates with the access backend; until then, Steps 1–2 grant legacy access. <span class="step-state">Pending</span></li>
+      </ul>
+      <div class="hero-ctas">
+        <a class="btn btn-solid" href="the-gate.html">Begin at the Gate</a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="employee-site" style="display:none">
+
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Clearance: Restored Signal</p>
+    <h1>Welcome back, <em>employee</em>.</h1>
+    <p class="roles">You found the gate, broke three seals, and rebuilt a dead connection with your bare hands. That is the entire hiring process. You were already hired.</p>
+    <p class="statement">ORIENTATION MEMO 002 — Read carefully. There will not be a quiz. There is always a quiz.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <p class="section-label">Step 3 · Credentials</p>
+    <h2>Employee sign-in</h2>
+    <p class="lede">The third step of the access sequence. The framework is in place; the form wakes up when the access backend goes live. Until then, Steps 1–2 carry legacy access — which is how you got here.</p>
+    <form class="signin-form" id="signin-form" autocomplete="off">
+      <label for="emp-id">Employee ID</label>
+      <input type="text" id="emp-id" name="employee_id" disabled placeholder="e.g. JAY-001">
+      <label for="emp-pass">Passphrase</label>
+      <input type="password" id="emp-pass" name="passphrase" disabled placeholder="••••••••••">
+      <button class="btn btn-solid" type="submit" disabled>Sign in</button>
+      <p class="signin-note">Status: framework armed — backend pending. In backend mode this form verifies against the access service and issues the session that replaces legacy access.</p>
+    </form>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <p class="section-label">Staff Directory</p>
+    <h2>Personnel</h2>
+    <p class="lede">MYTHOS Corporation maintains a lean org chart. All positions are currently held.</p>
+    <div class="grid">
+      <div class="card"><span class="tag">Executive</span><h3>Founder &amp; CEO</h3><p>Jay the Intern. Sets the strategy, approves the budget, signs the memos.</p></div>
+      <div class="card"><span class="tag">Engineering</span><h3>Lead Programmer</h3><p>Jay the Intern. Ships the code, then fixes what the AI did to the code.</p></div>
+      <div class="card"><span class="tag">Media</span><h3>Head of Production</h3><p>Jay the Intern. Runs six pages, one clan, and a weekly content system.</p></div>
+      <div class="card"><span class="tag">Manufacturing</span><h3>Factory Floor</h3><p>Jay the Intern. Counts to 45 exactly, every single deck.</p></div>
+      <div class="card"><span class="tag">IT</span><h3>Systems Administrator</h3><p>Jay the Intern. Revives consoles, converts kiosks, fears no update loop.</p></div>
+      <div class="card"><span class="tag">Support</span><h3>The Intern</h3><p>Jay. Gets the coffee, answers the riddles, holds the whole thing together.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="block alt">
+  <div class="wrap">
+    <p class="section-label">Notice Board</p>
+    <h2>Standing orders</h2>
+    <div class="steps">
+      <div class="step"><h3>Memo 014</h3><p>Abominations are monsters, not managers. Do not promote them, do not cc them, do not schedule a 1:1.</p></div>
+      <div class="step"><h3>Memo 021</h3><p>Starter decks contain 45 cards. This is not a guideline. See Memo 021, subsections 1 through 45.</p></div>
+      <div class="step"><h3>Memo 027</h3><p>All AI output passes through a human before it ships. The human is Jay. Jay is also the AI&rsquo;s supervisor, editor, and apology department.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <p class="section-label">Divisions Directory</p>
+    <h2>Where everything lives</h2>
+    <div class="grid">
+      <div class="card"><h3>Troll Squad Productions</h3><p>Media &amp; production.</p><p style="margin-top:10px"><a class="more" href="troll-squad-productions.html">Division page &rarr;</a></p></div>
+      <div class="card"><h3>Mythos Interactive</h3><p>Games.</p><p style="margin-top:10px"><a class="more" href="mythos-interactive.html">Division page &rarr;</a></p></div>
+      <div class="card"><h3>Mythos Manufacturing</h3><p>Physical products.</p><p style="margin-top:10px"><a class="more" href="mythos-manufacturing.html">Division page &rarr;</a></p></div>
+      <div class="card"><h3>Mythos Systems</h3><p>Client builds &amp; IT.</p><p style="margin-top:10px"><a class="more" href="mythos-systems.html">Division page &rarr;</a></p></div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /#employee-site -->
+
+<footer class="site-footer" id="contact">
+  <div class="wrap">
+    <div class="footer-inner">
+      <div>
+        <h4>MYTHOS Internal</h4>
+        <p>This page is not listed on the public site. You are here because the signal let you in.</p>
+      </div>
+      <div>
+        <h4>Personnel</h4>
+        <a href="index.html">Public site</a>
+        <a href="the-gate.html">The Gate</a>
+        <a href="the-archive.html">The Archive</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="mailto:trollsquadproductions@gmail.com">trollsquadproductions@gmail.com</a>
+      </div>
+    </div>
+    <div class="footer-base">
+      <span>&copy; 2026 MYTHOS Corporation — Internal</span>
+      <span>Built with AI. Verified by a human. Guarded by riddles.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="access.js"></script>
+
+</body>
+</html>

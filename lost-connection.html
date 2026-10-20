@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lost Connection — The Finished Build | MYTHOS Corporation</title>
+<meta name="description" content="Lost Connection, finished: restore the signal node by node. Reach 100% connection and the employee doors open.">
+<link rel="stylesheet" href="gothic.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  .game-shell{max-width:820px;margin:0 auto}
+  .hud{display:flex;gap:22px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+  .hud .bar-wrap{flex:1;min-width:200px}
+  .hud label{font-size:.78rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:5px}
+  .bar{height:12px;border:1px solid var(--line);border-radius:999px;background:#0a0806;overflow:hidden}
+  .bar > div{height:100%;width:0%;background:var(--accent);transition:width .2s}
+  .bar.signal > div{background:#8f3b2c}
+  #game{width:100%;height:auto;display:block;background:#0a0806;border:1px solid var(--line);border-radius:var(--radius);touch-action:none}
+  .overlay-note{margin-top:16px;color:var(--muted)}
+  #win-panel,#lose-panel{display:none;margin-top:22px;border:1px solid var(--accent);border-radius:var(--radius);background:var(--card);padding:26px}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="wordmark" href="index.html">Jay <span>the Intern</span><small>MYTHOS Corporation</small></a>
+    <nav class="main-nav" aria-label="Site">
+      <a href="index.html">Home</a>
+      <a href="our-work.html">Our Work</a>
+      <a href="my-work.html">My Work</a>
+      <a href="the-archive.html">The Archive</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-hero">
+  <div class="wrap">
+    <p class="section-label">Layer Three · The Finished Build</p>
+    <h1>Lost Connection</h1>
+    <p>The Archive&rsquo;s strangest exhibit, rebuilt whole. You are the last pulse on a dead line. Gather the gold nodes to restore the connection — and keep clear of the static. It eats signal.</p>
+  </div>
+</div>
+
+<section class="block">
+  <div class="wrap game-shell">
+    <div class="hud">
+      <div class="bar-wrap">
+        <label>Connection</label>
+        <div class="bar"><div id="conn-fill"></div></div>
+      </div>
+      <div class="bar-wrap">
+        <label>Signal</label>
+        <div class="bar signal"><div id="sig-fill" style="width:100%"></div></div>
+      </div>
+      <button class="btn btn-solid" id="start-btn" type="button">Restore the signal</button>
+    </div>
+    <canvas id="game" width="760" height="440"></canvas>
+    <p class="overlay-note">Move with your mouse, finger, or arrow keys. Gold nodes raise Connection and feed your Signal. The red static drains Signal on contact, and Signal fades on its own — finish the connection before the line goes silent. Reach 100% and the employee doors open.</p>
+
+    <div id="win-panel">
+      <p class="section-label">Connection Restored</p>
+      <h2 style="font-size:1.6rem;margin-bottom:10px">The line is alive.</h2>
+      <p style="color:var(--muted);margin-bottom:18px">Signal locked, nodes aligned, static banished. The system recognizes you now — employee access granted.</p>
+      <a class="btn btn-solid" href="employee.html">Enter the employee site</a>
+    </div>
+    <div id="lose-panel">
+      <p class="section-label">Signal Lost</p>
+      <h2 style="font-size:1.6rem;margin-bottom:10px">The line went silent.</h2>
+      <p style="color:var(--muted);margin-bottom:18px">The static thanks you for the meal. The nodes are still out there — try again.</p>
+      <button class="btn btn-solid" id="retry-btn" type="button">Try again</button>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer" id="contact">
+  <div class="wrap">
+    <div class="footer-inner">
+      <div>
+        <h4>Jay the Intern</h4>
+        <p>Founder of MYTHOS Corporation. Builder of games, systems, and the teams that ship them.</p>
+      </div>
+      <div>
+        <h4>Divisions</h4>
+        <a href="troll-squad-productions.html">Troll Squad Productions</a>
+        <a href="mythos-interactive.html">Mythos Interactive</a>
+        <a href="mythos-manufacturing.html">Mythos Manufacturing</a>
+        <a href="mythos-systems.html">Mythos Systems</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="mailto:trollsquadproductions@gmail.com">trollsquadproductions@gmail.com</a>
+        <a href="https://g.page/r/Cdmuf9Ouadc4EBI/review" target="_blank" rel="noopener">Leave a Google review</a>
+        <a href="https://www.facebook.com/1398358836689801" target="_blank" rel="noopener">Hostile Takeover on Facebook</a>
+      </div>
+    </div>
+    <div class="footer-base">
+      <span>&copy; 2026 MYTHOS Corporation</span>
+      <span>Built with AI. Verified by a human.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="access.js"></script>
+<script>
+(function(){
+  var cv = document.getElementById('game'), ctx = cv.getContext('2d');
+  var W = cv.width, H = cv.height;
+  var connFill = document.getElementById('conn-fill'), sigFill = document.getElementById('sig-fill');
+  var startBtn = document.getElementById('start-btn');
+  var running = false, raf = null, last = 0;
+  var player, nodes, wraiths, conn, signal, keys = {}, pointer = null;
+
+  function rand(a,b){ return a + Math.random()*(b-a); }
+  function reset(){
+    player = {x: W/2, y: H/2, r: 10};
+    nodes = []; wraiths = []; conn = 0; signal = 100;
+    for (var i=0;i<5;i++) spawnNode();
+    for (var j=0;j<3;j++) spawnWraith();
+    connFill.style.width = '0%'; sigFill.style.width = '100%';
+    document.getElementById('win-panel').style.display = 'none';
+    document.getElementById('lose-panel').style.display = 'none';
+  }
+  function spawnNode(){
+    nodes.push({x: rand(30, W-30), y: rand(30, H-30), r: 9, pulse: Math.random()*6.28});
+  }
+  function spawnWraith(){
+    wraiths.push({x: rand(0,W), y: rand(0,H), r: 14, vx: rand(-40,40)||20, vy: rand(-40,40)||20});
+  }
+  function dist(a,b){ var dx=a.x-b.x, dy=a.y-b.y; return Math.sqrt(dx*dx+dy*dy); }
+
+  function step(t){
+    if (!running) return;
+    var dt = Math.min(0.05, (t-last)/1000 || 0.016); last = t;
+    // movement
+    var sp = 260;
+    if (keys['arrowleft']||keys['a']) player.x -= sp*dt;
+    if (keys['arrowright']||keys['d']) player.x += sp*dt;
+    if (keys['arrowup']||keys['w']) player.y -= sp*dt;
+    if (keys['arrowdown']||keys['s']) player.y += sp*dt;
+    if (pointer){ player.x += (pointer.x-player.x)*Math.min(1, dt*10); player.y += (pointer.y-player.y)*Math.min(1, dt*10); }
+    player.x = Math.max(player.r, Math.min(W-player.r, player.x));
+    player.y = Math.max(player.r, Math.min(H-player.r, player.y));
+    // wraiths drift and bounce
+    wraiths.forEach(function(w){
+      w.x += w.vx*dt; w.y += w.vy*dt;
+      if (w.x < w.r || w.x > W-w.r) w.vx *= -1;
+      if (w.y < w.r || w.y > H-w.r) w.vy *= -1;
+      if (dist(player, w) < player.r + w.r) signal -= 26*dt;
+    });
+    // nodes
+    nodes = nodes.filter(function(n){
+      n.pulse += dt*3;
+      if (dist(player, n) < player.r + n.r + 2){
+        conn = Math.min(100, conn + 10);
+        signal = Math.min(100, signal + 7);
+        spawnNode();
+        if (conn >= 40 && wraiths.length < 4) spawnWraith();
+        if (conn >= 75 && wraiths.length < 5) spawnWraith();
+        return false;
+      }
+      return true;
+    });
+    signal -= 2.4*dt;
+    connFill.style.width = conn + '%';
+    sigFill.style.width = Math.max(0, signal) + '%';
+    draw();
+    if (conn >= 100) return end(true);
+    if (signal <= 0) return end(false);
+    raf = requestAnimationFrame(step);
+  }
+  function draw(){
+    ctx.fillStyle = '#0a0806'; ctx.fillRect(0,0,W,H);
+    ctx.strokeStyle = 'rgba(201,152,47,0.07)';
+    for (var gx=0; gx<=W; gx+=38){ ctx.beginPath(); ctx.moveTo(gx,0); ctx.lineTo(gx,H); ctx.stroke(); }
+    for (var gy=0; gy<=H; gy+=38){ ctx.beginPath(); ctx.moveTo(0,gy); ctx.lineTo(W,gy); ctx.stroke(); }
+    nodes.forEach(function(n){
+      var pr = n.r + Math.sin(n.pulse)*2;
+      ctx.beginPath(); ctx.arc(n.x, n.y, pr+7, 0, 6.29); ctx.fillStyle = 'rgba(201,152,47,0.15)'; ctx.fill();
+      ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, 6.29); ctx.fillStyle = '#c9982f'; ctx.fill();
+    });
+    wraiths.forEach(function(w){
+      ctx.beginPath(); ctx.arc(w.x, w.y, w.r+6, 0, 6.29); ctx.fillStyle = 'rgba(143,59,44,0.18)'; ctx.fill();
+      ctx.beginPath(); ctx.arc(w.x, w.y, w.r, 0, 6.29); ctx.fillStyle = '#8f3b2c'; ctx.fill();
+      ctx.beginPath(); ctx.arc(w.x-4, w.y-3, 2.4, 0, 6.29); ctx.fillStyle = '#ece4d3'; ctx.fill();
+      ctx.beginPath(); ctx.arc(w.x+4, w.y-3, 2.4, 0, 6.29); ctx.fillStyle = '#ece4d3'; ctx.fill();
+    });
+    ctx.beginPath(); ctx.arc(player.x, player.y, player.r+8, 0, 6.29); ctx.fillStyle = 'rgba(236,228,211,0.14)'; ctx.fill();
+    ctx.beginPath(); ctx.arc(player.x, player.y, player.r, 0, 6.29); ctx.fillStyle = '#ece4d3'; ctx.fill();
+    ctx.beginPath(); ctx.arc(player.x, player.y, 4, 0, 6.29); ctx.fillStyle = '#c9982f'; ctx.fill();
+  }
+  function end(won){
+    running = false;
+    if (won && window.markStep) window.markStep('signal');
+    if (raf) cancelAnimationFrame(raf);
+    document.getElementById(won ? 'win-panel' : 'lose-panel').style.display = 'block';
+    startBtn.textContent = 'Play again';
+  }
+  function start(){
+    reset(); running = true; last = performance.now();
+    startBtn.textContent = 'Restart';
+    raf = requestAnimationFrame(step);
+  }
+  startBtn.addEventListener('click', start);
+  document.getElementById('retry-btn').addEventListener('click', start);
+  window.addEventListener('keydown', function(e){
+    keys[e.key.toLowerCase()] = true;
+    if (e.key.indexOf('Arrow') === 0) e.preventDefault();
+  });
+  window.addEventListener('keyup', function(e){ keys[e.key.toLowerCase()] = false; });
+  function toLocal(e){
+    var r = cv.getBoundingClientRect();
+    var sx = W / r.width, sy = H / r.height;
+    var cx = (e.touches ? e.touches[0].clientX : e.clientX), cy = (e.touches ? e.touches[0].clientY : e.clientY);
+    return {x: (cx - r.left) * sx, y: (cy - r.top) * sy};
+  }
+  cv.addEventListener('mousemove', function(e){ pointer = toLocal(e); });
+  cv.addEventListener('touchmove', function(e){ pointer = toLocal(e); e.preventDefault(); }, {passive:false});
+  cv.addEventListener('touchstart', function(e){ pointer = toLocal(e); }, {passive:true});
+  reset(); draw();
+  ctx.fillStyle = 'rgba(236,228,211,0.85)';
+  ctx.font = '600 20px "Source Sans 3", sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('The line is dead. Press “Restore the signal.”', W/2, H/2 + 44);
+})();
+</script>
+
+</body>
+</html>
