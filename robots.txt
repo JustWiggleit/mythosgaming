@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /employee.html
+
+Sitemap: https://mythosgaming.dpdns.org/sitemap.xml
